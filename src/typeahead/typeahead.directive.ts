@@ -38,6 +38,8 @@ export class TypeaheadDirective implements OnInit, OnDestroy {
   @Input() typeaheadMinLength: number = void 0;
   /** sets use adaptive position */
   @Input() adaptivePosition: boolean;
+  /** turn on/off animation */
+  @Input() isAnimated = false;
   /** minimal wait time after last character typed before typeahead kicks-in */
   @Input() typeaheadWaitMs: number;
   /** maximum length of options items list. The default value is 20 */
@@ -170,7 +172,8 @@ export class TypeaheadDirective implements OnInit, OnDestroy {
         typeaheadSelectFirstItem: config.selectFirstItem,
         typeaheadIsFirstItemActive: config.isFirstItemActive,
         typeaheadMinLength: config.minLength,
-        adaptivePosition: config.adaptivePosition
+        adaptivePosition: config.adaptivePosition,
+        isAnimated: config.isAnimated
       }
     );
   }

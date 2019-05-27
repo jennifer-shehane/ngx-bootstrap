@@ -1,7 +1,9 @@
 /* tslint:disable: max-file-line-count */
-import { TestBed, ComponentFixture, tick, fakeAsync } from '@angular/core/testing';
 import { asNativeElements } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
+import { TestBed, ComponentFixture, tick, fakeAsync } from '@angular/core/testing';
+
 import {
   TypeaheadConfig,
   TypeaheadContainerComponent,
@@ -19,6 +21,7 @@ describe('Component: TypeaheadContainer', () => {
   beforeEach(fakeAsync(() => {
     testModule = TestBed.configureTestingModule({
       declarations: [TypeaheadContainerComponent],
+      imports: [BrowserAnimationsModule],
       providers: [{
         provide: TypeaheadOptions,
         useValue: new TypeaheadOptions({ animation: false, placement: 'bottom-left', typeaheadRef: undefined })

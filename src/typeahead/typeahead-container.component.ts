@@ -1,18 +1,20 @@
+// tslint:disable:max-file-line-count max-line-length
 import {
   Component,
   ElementRef,
   HostListener,
   QueryList,
+  Renderer2,
   TemplateRef,
   ViewChild,
-  ViewChildren,
-  Renderer2
+  ViewChildren
 } from '@angular/core';
 
 import { isBs3, Utils } from 'ngx-bootstrap/utils';
 import { latinize } from './typeahead-utils';
 import { TypeaheadMatch } from './typeahead-match.class';
 import { TypeaheadDirective } from './typeahead.directive';
+import { typeaheadAnimation } from './typeahead-animations';
 
 @Component({
   selector: 'typeahead-container',
@@ -33,12 +35,12 @@ import { TypeaheadDirective } from './typeahead.directive';
       z-index: 1000;
     }
   `
-  ]
+  ],
+  animations: [typeaheadAnimation]
 })
 export class TypeaheadContainerComponent {
   parent: TypeaheadDirective;
   query: string[] | string;
-  element: ElementRef;
   isFocused = false;
   top: string;
   left: string;
@@ -47,6 +49,7 @@ export class TypeaheadContainerComponent {
   dropup: boolean;
   guiHeight: string;
   needScrollbar: boolean;
+  animationState = 'void';
 
   get isBs4(): boolean {
     return !isBs3();
@@ -62,11 +65,9 @@ export class TypeaheadContainerComponent {
   private liElements: QueryList<ElementRef>;
 
   constructor(
-    element: ElementRef,
+    public element: ElementRef,
     private renderer: Renderer2
-  ) {
-    this.element = element;
-  }
+  ) { }
 
   get active(): TypeaheadMatch {
     return this._active;
@@ -78,7 +79,10 @@ export class TypeaheadContainerComponent {
 
   set matches(value: TypeaheadMatch[]) {
     this._matches = value;
+    this.animationState = this.isAnimated ? 'animated' : 'unanimated';
+
     this.needScrollbar = this.typeaheadScrollable && this.typeaheadOptionsInScrollableView < this.matches.length;
+
     if (this.typeaheadScrollable) {
       setTimeout(() => {
         this.setScrollableMode();
@@ -109,6 +113,10 @@ export class TypeaheadContainerComponent {
   // tslint:disable-next-line:no-any
   get optionsListTemplate(): TemplateRef<any> {
     return this.parent ? this.parent.optionsListTemplate : undefined;
+  }
+
+  get isAnimated(): boolean {
+    return this.parent ? this.parent.isAnimated : false;
   }
 
   get typeaheadScrollable(): boolean {
