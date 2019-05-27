@@ -7,6 +7,7 @@ import { BsDatepickerEffects } from '../../reducer/bs-datepicker.effects';
 import { BsDatepickerStore } from '../../reducer/bs-datepicker.store';
 
 import { PositioningService } from 'ngx-bootstrap/positioning';
+import { datepickerAnimation } from '../../datepicker-animations';
 
 @Component({
   selector: 'bs-datepicker-inline-container',
@@ -15,7 +16,8 @@ import { PositioningService } from 'ngx-bootstrap/positioning';
   host: {
     '(click)': '_stopPropagation($event)',
     style: 'display: inline-block;'
-  }
+  },
+  animations: [datepickerAnimation]
 })
 export class BsDatepickerInlineContainerComponent extends BsDatepickerContainerComponent
   implements OnInit, OnDestroy {

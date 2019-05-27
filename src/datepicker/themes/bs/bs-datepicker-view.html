@@ -1,6 +1,6 @@
 <!-- days calendar view mode -->
 <div class="bs-datepicker" [ngClass]="containerClass" *ngIf="viewMode | async">
-  <div class="bs-datepicker-container">
+  <div class="bs-datepicker-container" [@datepickerAnimation]="animationState">
 
     <!--calendars-->
     <div class="bs-calendar-container" [ngSwitch]="viewMode | async" role="application">
